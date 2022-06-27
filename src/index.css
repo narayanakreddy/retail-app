@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  font-family: openSans-Regular;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #343C6A !important;
+  background: #E5E5E5;
+  /* background: linear-gradient(
+    360deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(232, 248, 255, 1) 88%
+  ); */
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+#root,
+.app-container,
+.auth-container {
+  height: inherit;
+  overflow: auto;
+}
+  

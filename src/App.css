@@ -1,0 +1,31 @@
+.top-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0 28px rgb(93 93 102 / 1%);
+  z-index: 1000;
+  padding: 0 30px;
+}
+
+.render-section {
+  margin-top: 56px;
+  display: flex;
+  height: calc(100vh - 56px);
+}
+.left-section {
+  width: 200px;
+  background: #fff;
+  padding: 10px;
+  padding-left: 0;
+  padding-top: 0;
+  border-top: 1px solid #f9f9f9;
+}
+.right-section {
+  width: calc(100% - 200px);
+  padding: 20px 30px;
+}
