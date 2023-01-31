@@ -26,17 +26,19 @@ export default function CaptureFace(props) {
         message.error("Please capture selfie");
         return;
       }
-      setLoader(true);
-      const response = await NewCustomerService.verifyLiveness(
-        selfieImage.split(",")[1]
-      );
-      if (response.status === 200) {
-        setLoader(false);
-        if (response.data["liveness"]) {
-          dispatch(setSelfieImageInfo(selfieImage));
+      // setLoader(true);
+                dispatch(setSelfieImageInfo(selfieImage));
           props.onNext();
-        }
-      }
+      // const response = await NewCustomerService.verifyLiveness(
+      //   selfieImage.split(",")[1]
+      // );
+      // if (response.status === 200) {
+      //   setLoader(false);
+      //   if (response.data["liveness"]) {
+      //     dispatch(setSelfieImageInfo(selfieImage));
+      //     props.onNext();
+      //   }
+      // }
     } catch (err) {
       setLoader(false);
     }

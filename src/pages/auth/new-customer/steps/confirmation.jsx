@@ -115,15 +115,15 @@ export default function Confirmation(props) {
       };
       console.log(reqParams);
       setLoading(true);
-      const response = await NewCustomerService.postCreateNewCustomer(
-        reqParams
-      );
-      if (response.status === 200) {
+      // const response = await NewCustomerService.postCreateNewCustomer(
+      //   reqParams
+      // );
+      // if (response.status === 200) {
         setLoading(false);
-        setMessage(response.data);
+        // setMessage(response.data);
         setStage(3);
         props.setDone(true);
-      }
+      // }
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -281,9 +281,9 @@ export default function Confirmation(props) {
       <>
         <p style={{ textAlign: "center", fontSize: 20 }}>
           Customer Registration is successful. Your Customer Id:{" "}
-          <b>{message["customerId"] || "100067585"}</b>. <br /> We have provided
+          <b>{message["customerId"] || "100100555"}</b>. <br /> We have provided
           you a Neo Bank Classic Saving Account with Number:{" "}
-          <b>{message["accountNumber"] || "763463878267896"}</b>.
+          <b>{message["accountNumber"] || "100120120000382"}</b>.
         </p>
       </>
     );

@@ -34,24 +34,30 @@ export default function UploadIdentityFront(props) {
   const verifyFacematch = useCallback(async () => {
     try {
       setLoader(true);
-      const response = await NewCustomerService.verifyFacematch(
-        selfieImage.split(",")[1],
-        frontImage.split(",")[1]
-      );
-      if (response.status === 200) {
-        //  if (response.data["match"] && response.data["matchScore"] >= 50) {
-          dispatch(setFrontImageInfo(frontImage));
-          dispatch(setBackImageInfo(backImage));
-          await getKycDetails();
-          props.onNext();
-        // } else {
-        //   setLoader(false);
-        //   setVerifyDetails(response.data);
-        //   // message.error(
-        //   //   "Uploaded or Captured an image of Id not match with real face."
-        //   // );
-        // }
-      }
+
+      dispatch(setFrontImageInfo(frontImage));
+      dispatch(setBackImageInfo(backImage));
+      await getKycDetails();
+      props.onNext();
+
+      // const response = await NewCustomerService.verifyFacematch(
+      //   selfieImage.split(",")[1],
+      //   frontImage.split(",")[1]
+      // );
+      // if (response.status === 200) {
+      //   //  if (response.data["match"] && response.data["matchScore"] >= 50) {
+      //     dispatch(setFrontImageInfo(frontImage));
+      //     dispatch(setBackImageInfo(backImage));
+      //     await getKycDetails();
+      //     props.onNext();
+      //   // } else {
+      //   //   setLoader(false);
+      //   //   setVerifyDetails(response.data);
+      //   //   // message.error(
+      //   //   //   "Uploaded or Captured an image of Id not match with real face."
+      //   //   // );
+      //   // }
+      // }
     } catch (err) {
       setLoader(false);
     }
@@ -59,42 +65,72 @@ export default function UploadIdentityFront(props) {
 
   const getKycDetails = useCallback(async () => {
     try {
-      const response = await NewCustomerService.getKycDetails(
-        frontImage.split(",")[1],
-        backImage.split(",")[1]
-      );
-      if (response.status === 200) {
+
+      // const response = await NewCustomerService.getKycDetails(
+      //   frontImage.split(",")[1],
+      //   backImage.split(",")[1]
+      // );
+      // if (response.status === 200) {
         setLoader(false);
 
+        // dispatch(
+        //   setBasicInfo({
+        //     firstName: response.data["name"],
+        //     dateOfBirth: moment(response.data["dob"], "DD/MM/YYYY").format(
+        //       "MM/DD/YYYY"
+        //     ),
+        //     gender: response.data["gender"] === "MALE" ? 1 : 2,
+        //   })
+        // );
         dispatch(
           setBasicInfo({
-            firstName: response.data["name"],
-            dateOfBirth: moment(response.data["dob"], "DD/MM/YYYY").format(
-              "MM/DD/YYYY"
-            ),
-            gender: response.data["gender"] === "MALE" ? 1 : 2,
+            firstName: "Deepak",
+            lastName: "Anandaraj",
+            dateOfBirth: moment("15/09/1989", "DD/MM/YYYY").format("MM/DD/YYYY"),
+            gender: 1,
           })
         );
+  
+
+        // dispatch(
+        //   setAddressInfo({
+        //     addrLine1: response.data["addrLine1"],
+        //     addrLine2: response.data["addrLine2"],
+        //     city: response.data["city"],
+        //     district: response.data["district"],
+        //     state: response.data["state"],
+        //     pinCode: response.data["zipCode"],
+        //     houseNumber: response.data["houseNumber"],
+        //   })
+        // );
+
+        // dispatch(
+        //   setFamilyInfo({
+        //     fatherFirstName: response.data["father"],
+        //     motherFirstName: response.data["mother"],
+        //   })
+        // );
 
         dispatch(
           setAddressInfo({
-            addrLine1: response.data["addrLine1"],
-            addrLine2: response.data["addrLine2"],
-            city: response.data["city"],
-            district: response.data["district"],
-            state: response.data["state"],
-            pinCode: response.data["zipCode"],
-            houseNumber: response.data["houseNumber"],
+            addrLine1: "Central Excise Nagar 2nd cross",
+            addrLine2: "Mookaneri Adikarai",
+            city: "Salem",
+            district: "Salem",
+            state: "TamilNadu",
+            pinCode: "636008",
+            houseNumber: "Plot no.22",
           })
         );
-
+  
         dispatch(
           setFamilyInfo({
-            fatherFirstName: response.data["father"],
-            motherFirstName: response.data["mother"],
+            fatherFirstName: "",
+            motherFirstName: "",
           })
         );
-      }
+        
+      // }
     } catch (err) {
       setLoader(false);
     }

@@ -29,12 +29,14 @@ export default function BasicInfo(props) {
         customerIdentifier: identityInfo["name"],
       };
       setLoader(true)
+      setLoader(false)
+      props.onNext();
 
-      const response = await NewCustomerService.validateIdcheck(reqParams);
-      if (response.status === 200) {
-        setLoader(false)
-        props.onNext();
-      }
+      // const response = await NewCustomerService.validateIdcheck(reqParams);
+      // if (response.status === 200) {
+      //   setLoader(false)
+      //   props.onNext();
+      // }
     } catch (err) {
       setLoader(false)
       console.log(err);

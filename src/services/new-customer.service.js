@@ -239,9 +239,9 @@ const postCreateNewCustomer = async (params) => {
       requestId: "CREATECUSTOMER",
       module: "Information",
     };
-    const response = await http.post(
+    const response = await http.get(
       config.newCustomer.createNewCustomer,
-      reqParams
+      
     );
     return { status: response.status, data: response.data };
   } catch (err) {
