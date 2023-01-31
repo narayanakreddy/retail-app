@@ -6,7 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import "./theme.css"
 import 'bootstrap/dist/css/bootstrap.min.css'
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import "react-multi-carousel/lib/styles.css"
 
 import App from "./App";
