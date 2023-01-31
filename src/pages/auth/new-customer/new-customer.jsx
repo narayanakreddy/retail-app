@@ -1,16 +1,14 @@
 import React, { useState, useCallback, useEffect } from "react";
 import "./new-customer.css";
 import GetStarted from "./steps/getStarted";
-import pageLogo from "../../../assests/images/logo/logo.svg";
-// import NewCustomerService from "../../../services/new-customer.service";
+import pageLogo from "../../../assests/images/pageLogo/pageLogo.svg";
 import IdentityType from "./steps/identity";
 import CaptureFace from "./steps/captureFace";
 import BasicInfo from "./steps/basicInfo";
 import FamilyInfo from "./steps/familyInfo";
-// import AuthService from "../../../services/auth.service";
 import Signature from "./steps/signature";
 import UploadIdentityFront from "./steps/uploadIdentityFront";
-// import Confirmation from "./steps/confirmation";
+import Confirmation from "./steps/confirmation";
 import AddressDetails from "./steps/addressDetails";
 import { Divider } from "antd";
 import { MdOutlineFlight } from "react-icons/md";
@@ -20,57 +18,37 @@ import { useNavigate } from "react-router-dom";
 import ValidateEmail from "./steps/validateEmail";
 import ValidateMobileOtp from "./steps/verifymobileOtp";
 import ValidateEmailOtp from "./steps/validateEmailOtp";
+import NewCustomerService from "../../../services/new-customer.service";
+import ProductFeatures from "./steps/productDetails";
+import { companyLogoSelector } from "../../../store/selectors/app.selector";
+import { useSelector } from "react-redux";
 
 export default function NewCustomer() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [stage, setStage] = useState(10);
+  const [stage, setStage] = useState(1);
   const [masterData, setMasterData] = useState({});
   const history = useNavigate();
   const [countryList, setCountryList] = useState([]);
   const [branchList, setBranchList] = useState([]);
   const [verifyDetails, setVerifyDetails] = useState({});
+  const [done, setDone] = useState(false);
+  const companyLogo = useSelector(companyLogoSelector);
 
-  // useEffect(() => {
-  //   getMasterData();
-  //   getCountryCodes();
-  //   // getBranchList()
-  // }, []);
 
-  // const getMasterData = useCallback(async (values) => {
-  //   try {
-  //     const response = await NewCustomerService.getRegistrationRequiredValues();
-  //     if (response.status === 200) {
-  //       setMasterData(response.data["data"]);
-  //     }
-  //   } catch (err) {}
-  // }, []);
+  useEffect(() => {
+    getMasterData();
+    // getCountryCodes();
+  }, []);
 
-  // const getCountryCodes = useCallback(async (values) => {
-  //   try {
-  //     console.log("Test");
-  //     const response = await AuthService.getCountryCodes();
-  //     // if (response.status === 200) {
-  //     // console.log(response.data)
-  //     setCountryList(response["countryCodeList"]);
-  //     // }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }, []);
-
-  // const getBranchList = useCallback(async (values) => {
-  //   try {
-  //     console.log("Test");
-  //     const response = await NewCustomerService.getBranchList();
-  //     if (response.status === 200) {
-  //       // console.log(response.data)
-  //       // setCountryList(response['countryCodeList'])
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }, []);
+  const getMasterData = useCallback(async (values) => {
+    try {
+      const response = await NewCustomerService.getRegistrationRequiredValues();
+      if (response.status === 200) {
+        setMasterData(response.data["data"]);
+      }
+    } catch (err) {}
+  }, []);
 
   function renderSwitch() {
     switch (stage) {
@@ -129,7 +107,7 @@ export default function NewCustomer() {
         return (
           <>
             <h3>Identity Information</h3>
-            <p>Please fill the identity information </p>
+            <p>Please fill the Identity Information </p>
             <IdentityType
               onBack={() => history("/login")}
               onNext={() => setStage(7)}
@@ -164,9 +142,9 @@ export default function NewCustomer() {
         return (
           <>
             <h3>Basic Information</h3>
-            <p>Please fill the basic information </p>
+            <p>Please fill the Basic Information </p>
             <BasicInfo
-              onBack={() => history("/login")}
+              onBack={() => setStage(8)}
               onNext={() => setStage(10)}
               masterData={masterData}
             />
@@ -177,9 +155,9 @@ export default function NewCustomer() {
         return (
           <>
             <h3>Family Information</h3>
-            <p>Please fill the family and spouse details </p>
+            <p>Please fill the Family and Spouse Information </p>
             <FamilyInfo
-              onBack={() => setStage(8)}
+              onBack={() => setStage(9)}
               onNext={() => setStage(11)}
               masterData={masterData}
             />
@@ -190,7 +168,7 @@ export default function NewCustomer() {
         return (
           <>
             <h3>Address Information</h3>
-            <p>Please fill the address details </p>
+            <p>Please fill the Address Information </p>
             <AddressDetails
               onBack={() => setStage(10)}
               onNext={() => setStage(12)}
@@ -210,12 +188,17 @@ export default function NewCustomer() {
           </>
         );
 
-      // case 13:
-      //   return (
-      //     <>
-      //       <Confirmation onBack={() => setStage(12)} masterData={masterData} />
-      //     </>
-      //   );
+      case 13:
+        return (
+          <>
+            <Confirmation
+              onBack={() => setStage(12)}
+              onNext={() => setStage(14)}
+              setDone={() => setDone(true)}
+              masterData={masterData}
+            />
+          </>
+        );
 
       default:
         return <GetStarted />;
@@ -223,11 +206,19 @@ export default function NewCustomer() {
   }
 
   return (
-    <div className="h-100 new-customer-wrapper">
+    <div className="new-customer-wrapper">
       <div className="new-customer-container">
         <div className="new-customer-header">
-          <div>
-            <img width={150} src={pageLogo} />
+          <div className="d-flex">
+          {companyLogo !== null && (
+              <img height={50} src={`data:image/png;base64, ${companyLogo}`} />
+            )}
+            {companyLogo === null && (
+              <>
+                <img height={50} src={pageLogo} />
+                <h3 className="bank-name">NEO Bank</h3>
+              </>
+            )}
           </div>
           <div>
             <Divider orientation="center" type="horizontal">
@@ -271,19 +262,26 @@ export default function NewCustomer() {
                 </div>
 
                 <div>
-                  <div className="n-circle">
-                    <BsCheck2 className="icon-style" />
+                  <div
+                    className="n-circle"
+                    style={
+                      done
+                        ? { background: "#F6834C" }
+                        : { background: "#dadada" }
+                    }
+                  >
+                    <BsCheck2
+                      className="icon-style"
+                      style={done ? { color: "#fff" } : { color: "#6e6e6e" }}
+                    />
                   </div>
-                  <span>Completd</span>
+                  <span>Completed</span>
                 </div>
               </div>
             </Divider>
           </div>
         </div>
-        <div className="new-customer-render-section">
-        {renderSwitch()}
-        </div>
-        
+        <div className="new-customer-render-section">{renderSwitch()}</div>
       </div>
     </div>
   );

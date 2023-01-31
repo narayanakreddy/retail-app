@@ -1,27 +1,78 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import "./landing.css";
-import { Button } from "antd";
+import { Button, Select } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import LOGO from "../../assests/images/logo/logo.svg";
+import LOGO from "../../assests/images/pageLogo/pageLogo.svg";
 import infoIcon from "../../assests/images/landing/info.svg";
 import secureIcon from "../../assests/images/landing/secure.svg";
 import cardIcon from "../../assests/images/landing/card.svg";
 import mobileApp from "../../assests/images/landing/mobileApp.svg";
 import sliderGroup from "../../assests/images/landing/slider_Group.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { companyLogoSelector, themeSelector } from "../../store/selectors/app.selector";
+import { setTheme } from "../../store/actions/app.action";
+import AuthService from "../../services/auth.service";
 
 export default function Landing() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [value, setValue] = useState("light");
+  const theme = useSelector(themeSelector);
+  const companyLogo = useSelector(companyLogoSelector);
+
+
+  const changeTheme = useCallback((value) => {
+    setValue(value);
+    dispatch(setTheme(value));
+    document.documentElement.classList = [];
+    document.documentElement.classList.add(value);
+  }, []);
+
+  useEffect(() => {
+    companyprofileimage();
+  }, []);
+
+  const companyprofileimage = useCallback(async () => {
+    try {
+      const response = await AuthService.companyprofileimage();
+      if (response.status === 200) {
+      }
+    } catch (error) {}
+  }, []);
+
   return (
     <>
       <div className="landing-section">
         <div className="landing-top-banner">
-          <img height={50} src={LOGO} />
+          <div className="d-flex">
+            {companyLogo !== null && (
+              <img height={50} src={`data:image/png;base64, ${companyLogo}`} />
+            )}
+            {companyLogo === null && (
+              <>
+                <img height={50} src={LOGO} />
+                <h3 className="bank-name">NEO Bank</h3>
+              </>
+            )}
+          </div>
+
           <div>
             <Link to={"/"}>Exchane Rates</Link>
             <Link to={"/"}>Loan Eligibility</Link>
             <Link to={"/"}>Locate Us</Link>
           </div>
           <div>
+            <Select
+              value={theme}
+              onChange={changeTheme}
+              placeholder="Choose Theme"
+              bordered={false}
+              style={{ width: 120 }}
+            >
+              <Select.Option value="light">Light</Select.Option>
+              <Select.Option value="dark">Dark</Select.Option>
+            </Select>
+
             <Button
               onClick={() => navigate("/login")}
               size="large"
@@ -30,7 +81,7 @@ export default function Landing() {
               Login
             </Button>
             <Button
-              onClick={() => navigate("/signUp")}
+              onClick={() => navigate("/newCustomer")}
               size="large"
               type="primary"
             >
@@ -47,7 +98,9 @@ export default function Landing() {
                   Financial transactions remotely using a mobile device such a
                   smartphone or tablet.
                 </p>
-                <Button size="large"  onClick={() => navigate("/login")}>Get Started</Button>
+                <Button size="large" onClick={() => navigate("/login")}>
+                  Get Started
+                </Button>
               </div>
               <div className="col-6">
                 <img height={460} src={sliderGroup} />

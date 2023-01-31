@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import OtpIcon from '../../../../assests/images/new-customer/otp.png'
 import OtpInput from 'react-otp-input'
 import { emailIdSelector } from '../../../../store/selectors/customer.selector'
+import NewCustomerService from '../../../../services/new-customer.service'
 
 export default function ValidateEmailOtp(props) {
   const dispatch = useDispatch()
@@ -14,11 +15,11 @@ export default function ValidateEmailOtp(props) {
   const postData = useCallback(async () => {
     try {
       setLoader(true)
-      // const response = await NewCustomerService.validateEmailOtp({ otp: OTP })
-      // if (response.status === 200) {
-      //   setLoader(false)
-      //   props.onNext()
-      // }
+      const response = await NewCustomerService.validateEmailOtp({ otp: OTP })
+      if (response.status === 200) {
+        setLoader(false)
+        props.onNext()
+      }
     } catch (err) {
       setLoader(false)
     }

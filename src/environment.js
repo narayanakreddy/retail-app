@@ -1,6 +1,8 @@
 const DEV = {
   ENCRYPT_KEY: "20E38214tC181205",
-  SERVICE_URL: "https://14.143.217.151/apigateway_apix",
+  // SERVICE_URL: "http://195.24.192.178:8084/apigateway/bankingservices",
+  //SERVICE_URL: "https://14.143.217.151/apigateway_apix",
+  SERVICE_URL: "/mock-data",
   GOOGLE_MAPS_API_KEY: "AIzaSyD94dYAJU4hkOyMi3mz6QGWxUsqkAx-9Ag",
   ACC_NO_VALIDATION: "^[0-9]{32,32}$",
   COUNTRY_CODE: "91",
@@ -42,7 +44,7 @@ const DEV = {
 
 const PROD = {
   ENCRYPT_KEY: "20E38214tC181205",
-  SERVICE_URL: "https://14.143.217.151/apigateway_apix",
+  SERVICE_URL: "/mock-data",
   GOOGLE_MAPS_API_KEY: "AIzaSyD94dYAJU4hkOyMi3mz6QGWxUsqkAx-9Ag",
   ACC_NO_VALIDATION: "^[0-9]{32,32}$",
   COUNTRY_CODE: "91",

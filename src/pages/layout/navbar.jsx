@@ -11,10 +11,11 @@ import LoansIcon from "../../assests/images/navigation/loans.svg";
 import ExchangeRatesIcon from "../../assests/images/navigation/exchangeRates.svg";
 import OtherServicesIcon from "../../assests/images/navigation/otherServices.svg";
 
+import OfferBanner1 from "../../assests/images/common/offerBanner1.svg";
+
 export default function NavBar() {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
   return (
     <>
       <div
@@ -120,6 +121,18 @@ export default function NavBar() {
         <img width={20} height={20} src={OtherServicesIcon} />
         <span>Other Services</span>
       </div>
+
+      <img
+        height={135}
+        onClick={() => navigate("/loans/applyLoan")}
+        style={{
+          display: "block",
+          margin: "0 auto",
+          marginTop: 15,
+          cursor: "pointer",
+        }}
+        src={OfferBanner1}
+      />
     </>
   );
 }

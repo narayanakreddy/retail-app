@@ -30,7 +30,7 @@ export default function Signature(props) {
     <div className='row'>
       <div className='col-5'>
         <h3>Signature</h3>
-        <p>Please draw the signature or upload the signature </p>
+        <p>Please Draw the Signature or Upload the Signature </p>
         <img width={200} style={{ display: 'block', marginBottom: 76 }} src={signatureIcon} />
 
         <div className='footer-btn-style'>

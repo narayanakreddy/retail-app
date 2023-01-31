@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import OtpInput from 'react-otp-input'
 import OtpIcon from '../../../../assests/images/new-customer/otp.png'
 import { mobileNumberSelector } from '../../../../store/selectors/customer.selector'
+import NewCustomerService from '../../../../services/new-customer.service'
 
 export default function ValidateMobileOtp(props) {
   const dispatch = useDispatch()
@@ -13,12 +14,12 @@ export default function ValidateMobileOtp(props) {
 
   const postData = useCallback(async () => {
     try {
-      // setLoader(true)
-      // const response = await NewCustomerService.validateMobileNoOtp({ otp: OTP })
-      // if (response.status === 200) {
-      //   setLoader(false)
-      //   props.onNext()
-      // }
+      setLoader(true)
+      const response = await NewCustomerService.validateMobileNoOtp({ otp: OTP })
+      if (response.status === 200) {
+        setLoader(false)
+        props.onNext()
+      }
     } catch (err) {
       setLoader(false)
     }
@@ -28,7 +29,7 @@ export default function ValidateMobileOtp(props) {
     <>
       <h3 style={{ margin: 0 }}>Validate Code</h3>
       <p>
-        Please enter the OTP sent to <b>{mobileNumber}</b>{' '}
+        Please enter the Code sent to <b>{mobileNumber}</b>{' '}
       </p>
       <div className='row'>
         <div className='col-7'>

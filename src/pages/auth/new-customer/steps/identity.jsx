@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import identifyIcon from '../../../../assests/images/new-customer/identify.png'
 import { identityInfoSelector } from '../../../../store/selectors/customer.selector'
 import { COUNTRYLIST } from '../../../../config/constant'
+import NewCustomerService from '../../../../services/new-customer.service'
+import { setIdentityInfo } from '../../../../store/actions/customer.action'
 
 const identityTypes = [
   { id: 1, name: 'Passport' },
@@ -27,12 +29,12 @@ export default function IdentityType(props) {
         identityNumber: values.identityNumber,
       }
       setLoader(true)
-      // const response = await NewCustomerService.validateId(reqParams)
-      // if (response.status === 200) {
-      //   setLoader(false)
-      //   dispatch(setIdentityInfo({ ...values, ...selectedIndentityDetails }))
-      //   props.onNext()
-      // }
+      const response = await NewCustomerService.validateId(reqParams)
+      if (response.status === 200) {
+        setLoader(false)
+        dispatch(setIdentityInfo({ ...values, ...selectedIndentityDetails }))
+        props.onNext()
+      }
     } catch (err) {
       setLoader(false)
     }

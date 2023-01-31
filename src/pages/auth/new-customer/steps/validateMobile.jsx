@@ -17,6 +17,7 @@ import {
 import { mobileNumberSelector } from "../../../../store/selectors/customer.selector";
 import { useDispatch, useSelector } from "react-redux";
 import mobileIcon from "../../../../assests/images/new-customer/phone.png";
+import NewCustomerService from "../../../../services/new-customer.service";
 // import NewCustomerService from '../../../../services/new-customer.service'
 
 export default function ValidateMobile(props) {
@@ -41,13 +42,13 @@ export default function ValidateMobile(props) {
 
   const postData = useCallback(async (values) => {
     try {
-      // setLoader(true)
-      // const response = await NewCustomerService.verifyMobileNo(values)
-      // if (response.status === 200) {
-      //   setLoader(false)
-      //   dispatch(setMobileNo(values.mobileNumber))
-      //   props.onNext()
-      // }
+      setLoader(true)
+      const response = await NewCustomerService.verifyMobileNo(values)
+      if (response.status === 200) {
+        setLoader(false)
+        dispatch(setMobileNo(values.mobileNumber))
+        props.onNext()
+      }
     } catch (err) {
       setLoader(false);
     }
@@ -56,7 +57,7 @@ export default function ValidateMobile(props) {
   return (
     <>
       <h3 style={{ margin: 0 }}>Mobile Number</h3>
-      <p>please enter mobile number </p>
+      <p>Please enter Mobile Number </p>
       <div className="row">
         <div className="col-6">
           <Form onFinish={postData} layout="vertical">

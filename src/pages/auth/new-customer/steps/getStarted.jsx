@@ -1,20 +1,8 @@
 import { Button, Checkbox } from 'antd'
 import React, { useState, useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import {
-  setAccountInfo,
-  setBasicInfo,
-  setAdditionalInfo,
-  setFamilyInfo,
-  setAddressInfo,
-  setIdentityInfo,
-  setSelfieImageInfo,
-  setFrontImageInfo,
-  setBackImageInfo,
-  setSignatureInfo,
-} from '../../../../store/actions/customer.action'
-// import Loading from '../../../../assets/loaders/Loading'
-// import TermsConditionService from '../../../../services/terms-and-conditions.service'
+import NewCustomerService from '../../../../services/new-customer.service'
+import Loading from '../components/loader'
 
 export default function GetStarted(props) {
   const [dataSource, setDataSource] = useState({})
@@ -22,33 +10,33 @@ export default function GetStarted(props) {
   const dispatch = useDispatch()
   const [checked, setChecked] = useState(false)
 
-  // useEffect(() => {
-  //   fetchTermsAndConditions()
-  // }, [])
+  useEffect(() => {
+    fetchTermsAndConditions()
+  }, [])
 
-  // const fetchTermsAndConditions = useCallback(async () => {
-  //   try {
-  //     setLoader(true)
-  //     const response = await TermsConditionService.getTermsAndConditions({
-  //       module: 'REGISTRATION',
-  //     })
-  //     if (response.status === 200) {
-  //       setLoader(false)
-  //       if (response.data['termsAndCondition']) {
-  //         setDataSource(response.data['termsAndCondition'][0])
-  //       }
-  //     }
-  //   } catch (err) {
-  //     setLoader(false)
-  //   }
-  // }, [])
+  const fetchTermsAndConditions = useCallback(async () => {
+    try {
+      setLoader(true)
+      const response = await NewCustomerService.getTermsAndConditions({
+        module: 'REGISTRATION',
+      })
+      if (response.status === 200) {
+        setLoader(false)
+        if (response.data['termsAndCondition']) {
+          setDataSource(response.data['termsAndCondition'][0])
+        }
+      }
+    } catch (err) {
+      setLoader(false)
+    }
+  }, [])
 
   function renderLoading() {
     return (
       <div
         className='mx-4 rounded d-flex justify-content-center align-items-center'
         style={{ marginTop: 80 }}>
-        {/* <Loading width='50px' height='50px' /> */}
+        <Loading width='50px' height='50px' />
       </div>
     )
   }
